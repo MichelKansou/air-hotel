@@ -1,0 +1,16 @@
+.cart-page {
+    max-width: 500px;
+    margin: auto;
+}
+
+.cart-page__items .cart-item {
+    margin-bottom: 2em;
+}
+
+.cart-page__items .cart-item:last-child {
+    margin-bottom: 0;
+}
+
+.cart-page__title {
+    text-align: left;
+}

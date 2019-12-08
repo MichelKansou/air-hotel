@@ -1,0 +1,13 @@
+.main {
+    max-width: 800px;
+    margin: auto;
+    padding: 2em 1em;
+}
+
+.main .item {
+    margin-bottom: 20px;
+}
+
+.main .item:last-child {
+    margin-bottom: 0;
+}

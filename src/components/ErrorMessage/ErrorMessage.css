@@ -1,0 +1,14 @@
+.msg {
+    text-align: left;
+    font-size: 15px;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.msg--danger {
+    color: red;
+}
+
+.msg--warning {
+    color: orange;
+}
