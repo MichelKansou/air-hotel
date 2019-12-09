@@ -1,8 +1,12 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import useForm from 'react-hook-form';
+import { sendEmail } from 'Actions/email';
+import { addOrder } from 'Actions/order';
 import InputField from 'Components/InputField/InputField';
+import nanoid from 'nanoid';
+
 import './Checkout.css';
 
 const CheckoutDetails = ({ items }) =>
@@ -19,12 +23,23 @@ const CheckoutDetails = ({ items }) =>
 
 function Checkout() {
     const { items, totalPrice } = useSelector(state => state.cart);
-
+    const [loading, setLoader] = useState(false);
     const { handleSubmit, register, errors } = useForm();
-
+    const dispatch = useDispatch();
     const history = useHistory();
 
-    const onSubmit = values => {
+    const onSubmit = async values => {
+        const payload = {
+            name: `${values.firstname} ${values.lastname}`,
+            email: values.email,
+            items: items,
+            orderId: nanoid(),
+            totalPrice
+        };
+        setLoader(true);
+        dispatch(addOrder(payload));
+        await dispatch(sendEmail(payload));
+        setLoader(false);
         history.replace('/confirmation');
     };
 
@@ -93,8 +108,8 @@ function Checkout() {
                         })}
                         errors={errors}
                     />
-                    <button className="checkout__form__btn" type="submit">
-                        Submit
+                    <button className="checkout__form__btn" type="submit" disabled={loading}>
+                        {loading ? 'Loading...' : 'Submit'}
                     </button>
                 </form>
             </div>
